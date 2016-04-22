@@ -1,0 +1,44 @@
+{
+  "name": "node-passport-auth",
+  "version": "0.0.1",
+  "description": "A simple implementation of Passport for authentication, based on the scotch.io tutorial (https://scotch.io/tutorials/easy-node-authentication-setup-and-local).",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stvnrlnd/node-passport-auth.git"
+  },
+  "keywords": [
+    "nodejs",
+    "auth",
+    "passportjs",
+    "ejs",
+    "expressjs"
+  ],
+  "author": "Steven Roland",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stvnrlnd/node-passport-auth/issues"
+  },
+  "homepage": "https://github.com/stvnrlnd/node-passport-auth#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.15.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.1",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "method-override": "^2.3.5",
+    "mongoose": "^4.4.13",
+    "morgan": "^1.7.0",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.0",
+    "passport-google-oauth": "^1.0.0",
+    "passport-local": "^1.0.0",
+    "passport-twitter": "^1.0.4"
+  }
+}
