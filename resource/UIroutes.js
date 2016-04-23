@@ -11,7 +11,12 @@ ui.route('/')
 ui.route('/login')
   .get(function(req, res) {
     res.render('account/login.ejs', { message: req.flash('loginMessage') });
-  });
+  })
+  .post(passport.authenticate('local-login', {
+    successRedirect : '/profile',
+    failureRedirect : '/login',
+    failureFlash : true
+  }));
 
 ui.route('/register')
   .get(function(req, res) {
