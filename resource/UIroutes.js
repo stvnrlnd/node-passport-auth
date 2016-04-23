@@ -1,7 +1,7 @@
 'use strict';
-var express = require('express');
-
-var ui      = express.Router();
+var express  = require('express');
+var passport = require('passport');
+var ui       = express.Router();
 
 ui.route('/')
   .get(function(req, res) {
@@ -11,12 +11,22 @@ ui.route('/')
 ui.route('/login')
   .get(function(req, res) {
     res.render('account/login.ejs', { message: req.flash('loginMessage') });
-  });
+  })
+  .post(passport.authenticate('local-login', {
+    successRedirect : '/profile',
+    failureRedirect : '/login',
+    failureFlash : true
+  }));
 
 ui.route('/register')
   .get(function(req, res) {
     res.render('account/register.ejs', { message: req.flash('registerMessage') });
-  });
+  })
+  .post(passport.authenticate('local-signup', {
+      successRedirect : '/profile',
+      failureRedirect : '/register',
+      failureFlash : true
+  }));
 
 ui.route('/profile')
   .get(isLoggedIn, function(req, res) {
