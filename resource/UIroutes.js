@@ -8,6 +8,8 @@ ui.route('/')
     res.render('index.ejs');
   });
 
+// ------ LOCAL ACCOUNT --------------------------------------------------------
+
 ui.route('/login')
   .get(function(req, res) {
     res.render('account/login.ejs', { message: req.flash('loginMessage') });
@@ -35,11 +37,28 @@ ui.route('/profile')
     });
   });
 
+// ------ FACEBOOK -------------------------------------------------------------
+
+ui.route('/auth/facebook')
+  .get(passport.authenticate('facebook', {
+    scope : 'email'
+  }));
+
+ui.route('/auth/facebook/callback')
+  .get(passport.authenticate('facebook', {
+    successRedirect : '/profile',
+    failureRedirect : '/'
+  }));
+
+// ------ LOGOUT ---------------------------------------------------------------
+
 ui.route('/logout')
   .get(function(req, res) {
     req.logout();
     res.redirect('/');
   });
+
+// ------ MIDDLEWARE -----------------------------------------------------------
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {

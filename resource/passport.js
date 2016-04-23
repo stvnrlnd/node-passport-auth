@@ -1,7 +1,9 @@
 'use strict';
-var LocalStrategy   = require('passport-local').Strategy;
+var LocalStrategy    = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 
-var User            = require('./models/user');
+var User             = require('./models/user');
+var config           = require('./config');
 
 module.exports = function(passport) {
   passport.serializeUser(function(user, done) {
@@ -56,6 +58,37 @@ module.exports = function(passport) {
         return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
       }
       return done(null, user);
+    });
+  }));
+
+
+// ------ FACEBOOK -------------------------------------------------------------
+
+  passport.use(new FacebookStrategy({
+    clientID        : config.facebookAuth.clientID,
+    clientSecret    : config.facebookAuth.clientSecret,
+    callbackURL     : config.facebookAuth.callbackURL
+  },
+  function(token, refreshToken, profile, done) {
+    process.nextTick(function() {
+      User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
+        if (err) {
+          return done(err);
+        }
+        if (user) {
+          return done(null, user);
+        } else {
+          var newUser            = new User();
+          newUser.facebook.id    = profile.id;
+          newUser.facebook.token = token;
+          newUser.save(function(err) {
+            if (err) {
+              throw err;
+            }
+            return done(null, newUser);
+          });
+        }
+      });
     });
   }));
 };
