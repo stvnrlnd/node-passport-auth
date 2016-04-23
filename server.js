@@ -14,8 +14,8 @@ var morgan       = require('morgan');
 var app          = express();
 var port         = process.env.PORT || 3000;
 var config       = require('./resource/config');
-var ui           = require('./resource/UIroutes.js');
-//                   require('./resource/config')(passport);
+var ui           = require('./resource/UIroutes');
+                   require('./resource/passport')(passport);
 
 mongoose.connect(config.dbURL);
 
